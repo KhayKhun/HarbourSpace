@@ -4,10 +4,15 @@ import turtle
 turtle.shape('turtle')
 turtle.speed(0)
 
-# A
-a = turtle.clone()
-a.color('#FF0000')
+TURTLE_COLOR = '#000000'
+A_COLOR = 'red'
+B_COLOR = 'green'
+C_COLOR = 'blue'
 
+# A fill red
+a = turtle.clone()
+a.color(TURTLE_COLOR,A_COLOR)
+a.begin_fill()
 a.penup()
 a.backward(100)
 a.pendown()
@@ -15,16 +20,42 @@ a.left(120)
 a.forward(180)
 a.left(120)
 a.forward(180)
-a.penup()
-a.backward(90)
-a.pendown()
 a.left(120)
-a.forward(90)
+a.forward(180)
+a.end_fill()
+a.backward(20)
+# A fill white
+a.color(TURTLE_COLOR,'#ffffff')
+a.begin_fill()
+a.left(120)
+a.forward(60)
+a.left(60)
+a.forward(80)
+a.left(60)
+a.forward(60)
+a.left(120)
+a.forward(20)
+a.penup()
+a.forward(100)
+a.pendown()
+a.forward(20)
+a.end_fill()
 
+a.left(120)
+a.penup()
+a.forward(80)
+a.pendown()
+a.begin_fill()
+a.forward(60)
+a.left(120)
+a.forward(60)
+a.left(120)
+a.forward(60)
+a.end_fill()
 
-# B
+# B 
 b = turtle.clone()
-b.color('#0000FF', '#0000FF')
+b.color(TURTLE_COLOR, B_COLOR)
 
 b.begin_fill()
 b.forward(50)
@@ -35,15 +66,44 @@ b.forward(50)
 b.left(90)
 b.forward(200)
 b.end_fill()
-# C
 
+b.left(90)
+b.penup()
+b.forward(30)
+b.left(90)
+b.forward(40)
+b.color(TURTLE_COLOR,'#ffffff')
+b.begin_fill()
+b.pendown()
+b.forward(50)
+b.left(90)
+b.circle(25, -180)
+b.end_fill()
+b.left(90)
+b.penup()
+b.forward(120)
+b.begin_fill()
+b.pendown()
+b.left(90)
+b.circle(25, -180)
+b.end_fill()
+b.shape('circle')
+
+# C 
 c = turtle.clone()
-c.color('#00FF00')
+c.color(TURTLE_COLOR, C_COLOR)
+c.begin_fill()
 c.penup()
 c.forward(300)
 c.pendown()
 c.circle(100, -180)
+c.left(90)
+c.forward(20)
+c.right(90)
+c.circle(80, 180)
+c.right(90)
+c.forward(20)
+c.end_fill()
 
-
-
+# Mainloop
 turtle.mainloop()
