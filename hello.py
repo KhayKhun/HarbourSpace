@@ -1,8 +1,9 @@
-print("Sai")
-print("18")
-print("OHOHOHOHOHHHHOOOOOOO")
+n = int(input())
 
-print("1", "2", "3", sep="UwU")
+s = set([x for x in range(1, n+ 1)])
 
-print(isinstance(1, bool))
-print(1 == True)
+for i in range(n- 1):
+    k = int(input())
+    s.remove(k)
+
+print(next(iter(s)))
