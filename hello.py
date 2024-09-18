@@ -1,9 +1,5 @@
-n = int(input())
+s = input()
 
-s = set([x for x in range(1, n+ 1)])
+result = s[len(s)//2 - 1: len(s)//2 + 2]
 
-for i in range(n- 1):
-    k = int(input())
-    s.remove(k)
-
-print(next(iter(s)))
+print(result)
