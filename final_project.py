@@ -1,7 +1,5 @@
 """
-Hangman Game
-by Sai Khay Khun Mong
-
+Sai Khay Khun Mong
 Intro to Programming 1: Python
 M2 - BKK - 2024
 Final Project
@@ -135,7 +133,7 @@ def generateLatestString(goalSet, goalString, currentCorrectGuesses):
     return latestString
 
 
-def render(message):
+def renderStatus(message):
     lts = generateLatestString(goal["set"], goal["word"], currentCorrectGuesses)
     print("----------------------------------------------")
     print("\nHint:", goal["hint"])
@@ -145,15 +143,15 @@ def render(message):
     print(f".{" ".join(lts)}.")
     print("\n")
 
-def getInput():
+def getUserInput():
     val = ""
     while True:
         ip = input('>> ')
         if not ip.isalpha() or len(ip) != 1:
-            render(f'{ip.upper()} is an invalid input! Please try again.')
+            renderStatus(f'{ip.upper()} is an invalid input! Please try again.')
 
         elif (ip in alreadyEntered):
-            render(f'You already guessed {ip}. Try another one.')
+            renderStatus(f'You already guessed {ip}. Try another one.')
 
         else:
             val = ip
@@ -161,28 +159,28 @@ def getInput():
 
     return val
 
-def game():
+def mainGame():
     while True:
         global mistakes
         if mistakes >= 6:
-            render("------ You Died :( ------")
+            renderStatus("------ You Died :( ------")
             print(f"------ The correct answer is {goal["word"].upper()} ------ \n")
             return
 
-        ip = getInput()
+        ip = getUserInput()
         alreadyEntered.add(ip)
 
         if isCorrectGuess(goal["set"], ip):
             currentCorrectGuesses.add(ip)
 
-            render(f"{ip.upper()} is a correct guess :)")
+            renderStatus(f"{ip.upper()} is a correct guess :)")
 
             if goal["set"] == currentCorrectGuesses:
-                render(f"You won with {mistakes} {"mistake" if mistakes <= 1 else "mistakes"}!")
+                renderStatus(f"You won with {mistakes} {"mistake" if mistakes <= 1 else "mistakes"}!")
                 return
         else:
             mistakes += 1
-            render(f"{ip.upper()} is a wrong guess :(")
+            renderStatus(f"{ip.upper()} is a wrong guess :(")
 
 
 def start():
@@ -193,8 +191,8 @@ def start():
         print(displayStages[-1])
         print("Try no to die.")
         input("\nPress Enter to start the game >> \n")
-        render("Please enter a character to start guessing (eg. A [or] a) ")
-        game()
+        renderStatus("Please enter a character to start guessing (eg. A [or] a) ")
+        mainGame()
 
         i = input("Press (R) to restart [or] Press any key to quit - ")
         if(i.lower() == 'r'):
