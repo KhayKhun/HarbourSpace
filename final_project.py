@@ -194,7 +194,7 @@ def start():
         renderStatus("Please enter a character to start guessing (eg. A [or] a) ")
         mainGame()
 
-        i = input("Press (R) to restart [or] Press any key to quit - ")
+        i = input("Press (R) to restart [or] Press enter to quit - ")
         if(i.lower() == 'r'):
             continue
         else:
