@@ -89,6 +89,12 @@ class Apple:
         screen.blit(apple_img, (self.rect.x, self.rect.y))
 
 # Functions
+def grid_decorator(func):
+    def inner():
+        func()
+    return inner
+
+@grid_decorator
 def drawGrid() -> None:
     for x in range(0, SCREEN_W, BLOCK_SIZE):
         for y in range(0, SCREEN_H, BLOCK_SIZE):
