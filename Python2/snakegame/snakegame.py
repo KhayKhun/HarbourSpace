@@ -1,7 +1,9 @@
+# I used chatGPT for types
 import pygame
 import sys
 import random
 import datetime
+from typing import List, Tuple, Union
 
 # Init
 pygame.init()
@@ -13,7 +15,6 @@ pygame.display.set_caption("Python Game with Python")
 
 clock = pygame.time.Clock()
 
-# Load and scale images
 snake_head_img = pygame.image.load("head.png")
 snake_head_img = pygame.transform.scale(snake_head_img, (BLOCK_SIZE, BLOCK_SIZE))
 snake_body_img = pygame.image.load("body.png")
@@ -22,7 +23,7 @@ apple_img = pygame.image.load("apple.png")
 apple_img = pygame.transform.scale(apple_img, (BLOCK_SIZE, BLOCK_SIZE))
 
 # Functions to handle history
-def read_history():
+def read_history() -> List[str]:
     try:
         with open("history.txt", "r") as file:
             lines = file.readlines()
@@ -30,21 +31,22 @@ def read_history():
     except FileNotFoundError:
         return []
 
-def write_history(score):
+def write_history(score: int) -> None:
     with open("history.txt", "a") as file:
         file.write(f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - Score: {score}\n")
 
 # Classes
 class Snake:
     def __init__(self) -> None:
-        self.x, self.y = BLOCK_SIZE, BLOCK_SIZE
-        self.xdir = 1
-        self.ydir = 0
-        self.head = pygame.Rect(self.x, self.y, BLOCK_SIZE, BLOCK_SIZE)
-        self.body = [pygame.Rect(self.x - BLOCK_SIZE, self.y, BLOCK_SIZE, BLOCK_SIZE)]
-        self.dead = False
+        self.x: int = BLOCK_SIZE
+        self.y: int = BLOCK_SIZE
+        self.xdir: int = 1
+        self.ydir: int = 0
+        self.head: pygame.Rect = pygame.Rect(self.x, self.y, BLOCK_SIZE, BLOCK_SIZE)
+        self.body: List[pygame.Rect] = [pygame.Rect(self.x - BLOCK_SIZE, self.y, BLOCK_SIZE, BLOCK_SIZE)]
+        self.dead: bool = False
 
-    def update(self):
+    def update(self) -> None:
         if self.dead:
             return
 
@@ -71,36 +73,36 @@ class Snake:
             if self.head.colliderect(square):
                 self.dead = True
 
-    def grow(self):
+    def grow(self) -> None:
         self.body.insert(0, pygame.Rect(self.head.x, self.head.y, BLOCK_SIZE, BLOCK_SIZE))
 
 class Apple:
     def __init__(self) -> None:
         self.spawn()
 
-    def spawn(self):
-        self.x = random.randint(0, (SCREEN_W // BLOCK_SIZE) - 1) * BLOCK_SIZE
-        self.y = random.randint(0, (SCREEN_H // BLOCK_SIZE) - 1) * BLOCK_SIZE
-        self.rect = pygame.Rect(self.x, self.y, BLOCK_SIZE, BLOCK_SIZE)
+    def spawn(self) -> None:
+        self.x: int = random.randint(0, (SCREEN_W // BLOCK_SIZE) - 1) * BLOCK_SIZE
+        self.y: int = random.randint(0, (SCREEN_H // BLOCK_SIZE) - 1) * BLOCK_SIZE
+        self.rect: pygame.Rect = pygame.Rect(self.x, self.y, BLOCK_SIZE, BLOCK_SIZE)
 
-    def draw(self):
+    def draw(self) -> None:
         screen.blit(apple_img, (self.rect.x, self.rect.y))
 
 # Functions
-def drawGrid():
+def drawGrid() -> None:
     for x in range(0, SCREEN_W, BLOCK_SIZE):
         for y in range(0, SCREEN_H, BLOCK_SIZE):
-            rect = pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE)
+            rect: pygame.Rect = pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE)
             pygame.draw.rect(screen, '#3c3c3b', rect, 1)
 
-def restart_game():
+def restart_game() -> None:
     global snake, apple, game_over, game_started
     snake = Snake()
     apple = Apple()
     game_over = False
     game_started = False
 
-def start_screen():
+def start_screen() -> None:
     screen.fill("#000000")
     title_text = FONT.render("Python Game with Python", True, "white")
     title_rect = title_text.get_rect(center=(SCREEN_W / 2, SCREEN_H / 2 - 100))
@@ -110,7 +112,7 @@ def start_screen():
     start_rect = start_text.get_rect(center=(SCREEN_W / 2, SCREEN_H / 2))
     screen.blit(start_text, start_rect)
 
-    history = read_history()
+    history: List[str] = read_history()
     if history:
         history_text = FONT.render("History", True, "white")
         history_rect = history_text.get_rect(center=(SCREEN_W / 2, SCREEN_H / 2 + 100))
@@ -124,10 +126,10 @@ def start_screen():
     pygame.display.update()
 
 # Game Initialization
-snake = Snake()
-apple = Apple()
-game_over = False
-game_started = False
+snake: Snake = Snake()
+apple: Apple = Apple()
+game_over: bool = False
+game_started: bool = False
 
 # Game Loop
 while True:
@@ -139,7 +141,7 @@ while True:
             if not game_started:
                 game_started = True
             elif game_over:
-                write_history(len(snake.body))
+                write_history(len(snake.body))  # len(snake.body) = score
                 restart_game()
             elif event.key == pygame.K_q:
                 restart_game()
@@ -178,6 +180,7 @@ while True:
 
     # Draw the snake head image at the head's position
     screen.blit(snake_head_img, (snake.head.x, snake.head.y))
+    # Draw the snake body
     for square in snake.body:
         screen.blit(snake_body_img, (square.x, square.y))
 
